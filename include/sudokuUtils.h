@@ -5,8 +5,10 @@
 
 #include <math.h>
 #include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "sudokuHeader.h"
 
 /**
  * @brief Struct holding information about the sudoku board.
@@ -26,22 +28,23 @@ struct Board {
  * @return true if ok
  * @return false if not valid
  */
-bool validateRange(int *range, size_t length);
+bool validateRange(int **range, size_t length);
 
 /**
  * @brief Check if the cell has a valid value on the board
- * 
+ *
  * @param board pointer to the board struct
  * @param cellPos position of the cell on the board
  * @return true if valid
  * @return false if invalid
  */
-bool validateCell(struct Board *b, int cellPos);
+EVAL_RULE validateCell(struct Board *b, int cellPos);
 
+bool tryCellValue(struct Board *b, int cellPos, int tryVal);
 /**
  * @brief Get the values of the row where cell are located
  * Fills the array with pointers each cells in the row where the reference cell is located.
- * 
+ *
  * @param array the array to fill with pointers to the row cells
  * @param b structure of the board
  * @param cellPos position of the reference cell
@@ -52,7 +55,7 @@ int getRow(int **array, struct Board *b, int cellPos);
 /**
  * @brief Get the values of the column where cell are located
  * Fills the array with pointers each cells in the column where the reference cell is located.
- * 
+ *
  * @param array the array to fill with pointers to the column cells
  * @param b structure of the board
  * @param cellPos position of the reference cell
@@ -63,7 +66,7 @@ int getCol(int **array, struct Board *b, int cellPos);
 /**
  * @brief Get the values of the subblock where the cell are located
  * Fills the passed array with pointers to each cells in the subblock where the reference cell is located
- * 
+ *
  * @param array the array to fill with pointers to the subblock
  * @param b structure of the board
  * @param cellPos position of the reference cell
