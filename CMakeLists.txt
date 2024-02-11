@@ -6,7 +6,8 @@ enable_testing()
 
 add_executable(sudoku-solver
     src/main.c
-    src/sudokuUtils.c    
+    src/cli.c
+    src/sudokuUtils.c
 )
 
 include_directories(include)
@@ -16,4 +17,4 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-target_link_libraries(sudoku-solver m)
+target_link_libraries(sudoku-solver m ncurses)

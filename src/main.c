@@ -1,11 +1,13 @@
 #include <stdio.h>
-#include <string.h>  // for memset
+#include <string.h> // for memset
 #include <time.h>
 
+#include "cli.h"
 #include "sudokuHeader.h"
 #include "sudokuUtils.h"
 
-void fillUnambigousVals(struct Board *b) {
+void fillUnambigousVals(struct Board* b)
+{
     /*
      * First we will find all unambigous values.
      * I.e. values that can't be places anywhere else.
@@ -31,9 +33,10 @@ void fillUnambigousVals(struct Board *b) {
     return;
 }
 
-bool DFS_method(struct Board *b, int depth) {
+bool DFS_method(struct Board* b, int depth)
+{
     // Copy to a new board to preserve the original
-    struct Board *b_copy = malloc(sizeof(*b));
+    struct Board* b_copy = malloc(sizeof(*b));
     memcpy(b_copy, b, sizeof(*b));
 
     bool tryNextValue = false;
@@ -59,45 +62,54 @@ bool DFS_method(struct Board *b, int depth) {
             }
             if (tryVal < 9) {
                 tryVal++;
-            } else {
+            }
+            else {
                 break;
             }
 
         } while ((tryVal <= 9) && nRet != NO_RULE);
-    } else {
+    }
+    else {
         free(b_copy);
         return true;
     }
 
     if (nRet == NO_RULE) {
         if (!DFS_method(b_copy, depth + 1)) {
-
             if (tryVal >= 9) {
                 free(b_copy);
                 return false;
-            } else {
+            }
+            else {
                 goto tryvalue_label;
             }
-        } else {
+        }
+        else {
             memcpy(b, b_copy, sizeof(*b));
             free(b_copy);
             return true;
         }
-    } else {
+    }
+    else {
         free(b_copy);
         return false;
     }
 }
 
-int main() {
+int main()
+{
+
+    initScreen();
+
     clock_t start_t, end_t;
     start_t = clock();
-    struct Board *board = malloc(sizeof(*board));
+    struct Board* board = malloc(sizeof(*board));
 
     // Initialize the struct
     board->sideLength = 9;
-    board->blockSideLength = 3;  // for a 9x9 board, typically
+    board->blockSideLength = 3; // for a 9x9 board, typically
 
+    // clang-format off
     int tmpBoard[] = {
         0, 0, 3, 0, 4, 0, 0, 0, 8,
         0, 0, 1, 6, 7, 0, 0, 2, 0,
@@ -108,6 +120,8 @@ int main() {
         8, 7, 0, 0, 0, 0, 0, 4, 0,
         0, 0, 0, 0, 2, 0, 0, 0, 0,
         0, 1, 0, 8, 0, 0, 0, 0, 0};
+    // clang-format on
+
     int j = 0;
     for (size_t i = 0; i < 81; i++) {
         board->boardValues[i] = tmpBoard[i];
@@ -115,7 +129,6 @@ int main() {
             board->clues[j++] = &board->boardValues[i];
         }
     }
-
 
     fillUnambigousVals(board);
 
@@ -129,5 +142,5 @@ int main() {
     end_t = clock();
 
     double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    printf("Total ms taken by CPU: %f\n", total_t*1000  );
+    printf("Total ms taken by CPU: %f\n", total_t * 1000);
 }

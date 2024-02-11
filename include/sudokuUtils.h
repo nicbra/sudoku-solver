@@ -15,11 +15,12 @@
  * @brief Struct holding information about the sudoku board.
  * For now, it will only work with square boards with square sub-blocks
  */
-struct Board {
-    int sideLength;                                      // Side length of board (e.g. 9x9 board have side length 9)
-    int blockSideLength;                                 // Side length of block
-    int *clues[MAX_SIDE_LENGTH * MAX_SIDE_LENGTH];       // Pointer to initial values on the board
-    int boardValues[MAX_SIDE_LENGTH * MAX_SIDE_LENGTH];  // The values on the board. Zeroes are empty cells
+struct Board
+{
+    int sideLength;                                     // Side length of board (e.g. 9x9 board have side length 9)
+    int blockSideLength;                                // Side length of block
+    int* clues[MAX_SIDE_LENGTH * MAX_SIDE_LENGTH];      // Pointer to initial values on the board
+    int boardValues[MAX_SIDE_LENGTH * MAX_SIDE_LENGTH]; // The values on the board. Zeroes are empty cells
 };
 
 /**
@@ -30,7 +31,7 @@ struct Board {
  * @return true if ok
  * @return false if not valid
  */
-bool validateRange(int **range, size_t length);
+bool validateRange(int** range, size_t length);
 
 /**
  * @brief Check if the cell has a valid value on the board
@@ -39,8 +40,7 @@ bool validateRange(int **range, size_t length);
  * @param cellPos position of the cell on the board
  * @return The rules that are violated
  */
-EVAL_RULE validateCell(struct Board *b, int cellPos);
-
+EVAL_RULE validateCell(struct Board* b, int cellPos);
 
 /**
  * @brief Try a value in a cell, to see if that doesn't breake any rules
@@ -50,7 +50,7 @@ EVAL_RULE validateCell(struct Board *b, int cellPos);
  * @param tryVal The value to try
  * @return EVAL_RULE Which rules are broken
  */
-EVAL_RULE tryCellValue(struct Board *b, int cellPos, int tryVal);
+EVAL_RULE tryCellValue(struct Board* b, int cellPos, int tryVal);
 /**
  * @brief Get the values of the row where cell are located
  * Fills the array with pointers each cells in the row where the reference cell is located.
@@ -60,7 +60,7 @@ EVAL_RULE tryCellValue(struct Board *b, int cellPos, int tryVal);
  * @param cellPos position of the reference cell
  * @return int The number of the row (zero indexed)
  */
-int getRow(int **array, struct Board *b, int cellPos);
+int getRow(int** array, struct Board* b, int cellPos);
 
 /**
  * @brief Get the values of the column where cell are located
@@ -71,7 +71,7 @@ int getRow(int **array, struct Board *b, int cellPos);
  * @param cellPos position of the reference cell
  * @return int The number of the column (zero indexed)
  */
-int getCol(int **array, struct Board *b, int cellPos);
+int getCol(int** array, struct Board* b, int cellPos);
 
 /**
  * @brief Get the values of the subblock where the cell are located
@@ -82,7 +82,7 @@ int getCol(int **array, struct Board *b, int cellPos);
  * @param b structure of the board
  * @param cellPos position of the reference cell
  */
-void getBlock(int **parray, int *narray, struct Board *b, int cellPos);
+void getBlock(int** parray, int* narray, struct Board* b, int cellPos);
 
 /**
  * @brief Find unambigious position of a value
@@ -96,13 +96,13 @@ void getBlock(int **parray, int *narray, struct Board *b, int cellPos);
  * @param value The value to find unambigious position
  * @return The position to put the value. If several positions are possible, NO_POS is returned.
  */
-int findUnambPos(EVAL_RULE base, int basePos, struct Board *b, int value);
+int findUnambPos(EVAL_RULE base, int basePos, struct Board* b, int value);
 
 /**
  * @brief Print the board to terminal
  * 
  * @param b the board
  */
-void printBoard (struct Board *b);
+void printBoard(struct Board* b);
 
-#endif  // SUDOKU_UTILS_H
+#endif // SUDOKU_UTILS_H
